@@ -3,9 +3,9 @@ import "carbon-components-svelte/css/all.css"
 import { Grid, Row, Column } from "carbon-components-svelte";
 import { fade, fly } from "svelte/transition";
 
-let checkAnimation = false
-let checkAnimation2 = false
-let checkAnimation3 = false
+export let checkAnimation = false
+export let checkAnimation2 = false
+export let checkAnimation3 = false
 
 </script>
 <section id="team">
@@ -14,7 +14,6 @@ let checkAnimation3 = false
         <div class="our-team__header">
             <h2>Our Team</h2>    
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-            <input type="checkbox" bind:checked={checkAnimation}>
         </div>
         {/if}
         {#if checkAnimation2}

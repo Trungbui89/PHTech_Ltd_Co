@@ -1,6 +1,10 @@
 <script lang="ts">
-    import Ourteam from '$lib/components/ourteam/ourteam.svelte';
+    import OurTeam from '$lib/components/ourteam/ourteam.svelte';
 </script>
 <div class="home-page-body">
-    <Ourteam></Ourteam>
+    <OurTeam 
+    checkAnimation={true}
+    checkAnimation2={true}
+    checkAnimation3={true}
+    ></OurTeam>
 </div>
