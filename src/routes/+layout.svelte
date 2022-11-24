@@ -32,14 +32,14 @@
 			>
 		</div>
 		<ul class="bar-menu">
-			<li><a href="#Home">Home</a></li>
-			<li><a href="#Services">Services</a></li>
-			<li><a href="#About">About</a></li>
-			<li><a href="#WhyUs">Why Us</a></li>
-			<li><a href="#Comments">Comments</a></li>
-			<li><a href="#OurTeam">Our Team</a></li>
-			<li><a href="#Posts">Posts</a></li>
-			<li><a href="#ContactUs">Contact Us</a></li>
+			<li><a href="#home">Home</a></li>
+			<li><a href="#services">Services</a></li>
+			<li><a href="#about">About</a></li>
+			<li><a href="#whyUs">Why Us</a></li>
+			<li><a href="#comments">Comments</a></li>
+			<li><a href="#ourTeam">Our Team</a></li>
+			<li><a href="#posts">Posts</a></li>
+			<li><a href="#contactUs">Contact Us</a></li>
 		</ul>
 	</div>
 </div>
