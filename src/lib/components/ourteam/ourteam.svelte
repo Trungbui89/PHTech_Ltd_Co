@@ -3,20 +3,21 @@ import "carbon-components-svelte/css/all.css"
 import { Grid, Row, Column } from "carbon-components-svelte";
 import { fade, fly } from "svelte/transition";
 
-export let checkAnimation = false
-export let checkAnimation2 = false
-export let checkAnimation3 = false
+export let ourteamAnimation = false
+export let ourteamAnimation2 = false
+export let ourteamAnimation3 = false
 
 </script>
 <section id="team">
     <div class="our-team-content">
-        {#if checkAnimation}
-        <div class="our-team__header">
+        {#if ourteamAnimation}
+        <div class="our-team__header"
+        in:fade="{{duration: 1500}}" out:fade="{{duration: 1500}}">
             <h2>Our Team</h2>    
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+            <p>Our business is helping you grow your business</p>
         </div>
         {/if}
-        {#if checkAnimation2}
+        {#if ourteamAnimation2}
         <div class="our-team__member">
             <Grid>
                 <div class="our-team__ceo"
@@ -46,7 +47,7 @@ export let checkAnimation3 = false
                 </div>   
                 <hr in:fly="{{ x: -1000, duration: 1500 }}" out:fly="{{ x: -1000, duration: 1500 }}">   
                 </div>
-                {#if checkAnimation3}
+                {#if ourteamAnimation3}
                 <div class="our-team__dev"
                 in:fly="{{ x: 1000, duration: 1500 }}" out:fly="{{ x: 1000, duration: 1500 }}">  
                 <Row>
@@ -98,8 +99,7 @@ export let checkAnimation3 = false
 
 <style lang="scss">
 @use 'src/variables';
-
-.our-team-content {
+#team {
     background: linear-gradient(rgb(7 7 7 / 60%), rgb(0 0 0 / 60%)), url(/images/background2.jpeg) center center;
     background-size: cover;
     padding: 150px 60px;
@@ -108,6 +108,10 @@ export let checkAnimation3 = false
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
+}
+.our-team-content {
+    width: 90%;
+    margin: 0 auto;
 }
 .our-team__header {
     text-align: center;
