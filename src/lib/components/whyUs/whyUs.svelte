@@ -12,27 +12,22 @@
         "Rempora incidunt ut labore et dolore magnam aliquam",
         "Neque porro quisquam est, qui dolorem ipsum quia amet"
     ]
-
-    let processList = [
-        {title: "TDD", process: "15%"},
-        {title: "Python", process: "30%"},
-        {title: "C#", process: "45%"},
-        {title: "CSS3", process: "60%"},
-        {title: "JavaScript", process: "75%"},
-        {title: "HTML5", process: "90%"},
-        {title: "React", process: "65%"}
-    ]
 </script>
 
-<section id="about">
-    <div class="about-wrapper">
+<section id="whyUs">
+    <div class="whyUs-wrapper">
         <header>
-            <h2>About Us</h2>
+            <h2>Why Us</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
         </header>
-        <div class="about-content">
+        <div class="whyUs-content">
             <Grid>
                 <Row>
+                    <Column sm={1} md={8} lg={8}>
+                        <div class='why-us-img'>
+                            <img src='/images/whyus.jpg' />
+                        </div>
+                    </Column>
                     <Column sm={1} md={8} lg={8}>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Xonsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                         <ul class="gray-list">
@@ -43,24 +38,6 @@
                             {/each}
                         </ul>
                     </Column>
-                    <Column sm={1} md={8} lg={8}>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Xonsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        <ul class="process-list">
-                            {#each processList as item}
-                                <li>
-                                    <LevelProcessBar processData={item} />
-                                </li>
-                            {/each}
-                        </ul>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
-                    </Column>
-                </Row>
-                <Row>
-                    <Column>
-                        <div class="btn-position">
-                            <Button value="Get Started"/>
-                        </div>
-                    </Column>
                 </Row>
             </Grid>
         </div>
@@ -70,7 +47,7 @@
 <style lang="scss">
     @use 'src/variables';
 
-    #about {
+    #whyUs {
         width: variables.$wrapper-width-des;
         margin: 0 auto;
         font-weight: 600;
@@ -90,7 +67,7 @@
                 margin-top: 12px;
             }
         }
-        .about-content {
+        .whyUs-content {
             padding: 0 48px;
             p {
                 margin-bottom: 12px;
@@ -100,13 +77,14 @@
                     padding: 6px 0;
                 }
             }
-            .process-list {
-                li {
-                    margin-bottom: 20px;
+            .why-us-img {
+                display: flex;
+                max-width: 100%;
+                height: 100%;
+                align-items: center;
+                img {
+                    max-width: 100%;
                 }
-            }
-            .btn-position {
-                margin-top: 20px;
             }
         }
     }
