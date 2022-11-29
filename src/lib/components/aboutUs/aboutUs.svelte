@@ -3,6 +3,9 @@
     import GrayListItem from "../helper/homePage/grayListItem.svelte"
     import LevelProcessBar from "../helper/homePage/levelProcessBar.svelte"
     import Button from "../helper/homePage/button.svelte"
+    import { inview } from 'svelte-inview'
+	import { fly, fade } from "svelte/transition";
+	import ContactUs from "../contactUs/contactUs.svelte";
 
     let grayList = [
         "Nemo enim ipsam voluptatem quia voluptas sit aspernatur",
@@ -22,47 +25,68 @@
         {title: "HTML5", process: "90%"},
         {title: "React", process: "65%"}
     ]
+
+    let isInView: boolean;
+    let isInView1: boolean;
+
 </script>
 
 <section id="about">
     <div class="about-wrapper">
-        <header>
-            <h2>About Us</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-        </header>
-        <div class="about-content">
+        <div class="about-header"
+            use:inview={{ unobserveOnEnter: true, rootMargin: '-20%'}}
+            on:change={({ detail }) => {
+                isInView = detail.inView;
+            }}>
+            {#if isInView}
+            <header
+            in:fly="{{y: 200, opacity: 0, duration: 1500, delay:100}}">
+                <h2>About Us</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+            </header>
+            {/if}
+        </div>
+        <div class="about-content"
+        use:inview={{ unobserveOnEnter: true, rootMargin: '-20%',threshold:1 }}
+            on:change={({ detail }) => {
+                isInView1 = detail.inView;
+            }}>
+            {#if isInView1}
             <Grid>
                 <Row>
                     <Column sm={1} md={8} lg={8}>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Xonsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        <ul class="gray-list">
-                            {#each grayList as item}
-                                <li>
-                                    <GrayListItem content={item} />
-                                </li>
-                            {/each}
-                        </ul>
+                        <div class="left-list"
+                        in:fly="{{x: 100, opacity: 0, duration: 1500, delay:500}}">                            
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Xonsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            <ul class="gray-list">
+                                {#each grayList as item}
+                                    <li>
+                                        <GrayListItem content={item} />
+                                    </li>
+                                {/each}
+                            </ul>
+                            <div class="btn-position">
+                                <Button value="Get Started"/>
+                            </div>
+                        </div>
                     </Column>
                     <Column sm={1} md={8} lg={8}>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Xonsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        <ul class="process-list">
-                            {#each processList as item}
-                                <li>
-                                    <LevelProcessBar processData={item} />
-                                </li>
-                            {/each}
-                        </ul>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
-                    </Column>
-                </Row>
-                <Row>
-                    <Column>
-                        <div class="btn-position">
-                            <Button value="Get Started"/>
+                        <div class="right-list"
+                        in:fly="{{x: -100, opacity: 0, duration: 1500, delay:500}}">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Xonsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            <ul class="process-list">
+                                {#each processList as item}
+                                    <li>
+                                        <LevelProcessBar processData={item} />
+                                    </li>
+                                {/each}
+                            </ul>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
                         </div>
                     </Column>
                 </Row>
             </Grid>
+            {/if}
         </div>
     </div>
 </section>
@@ -101,8 +125,10 @@
                 }
             }
             .process-list {
+                padding: 6px 0;
                 li {
                     margin-bottom: 20px;
+                    
                 }
             }
             .btn-position {

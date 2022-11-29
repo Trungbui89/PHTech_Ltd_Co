@@ -1,9 +1,11 @@
 <script lang="ts">
-    import "carbon-components-svelte/css/all.css"
+    import "carbon-components-svelte/css/all.css";
     import { Grid, Row, Column } from "carbon-components-svelte";
     import { fade, fly } from "svelte/transition";
     import { createFieldValidator } from './validation.js'
     import { emailValidator, requiredValidator } from './validators.js'
+    import { inview } from 'svelte-inview';
+
     
     export let contactUsFormAnimation = false
     const [ validity, validate ] = createFieldValidator(requiredValidator(), emailValidator())
@@ -11,116 +13,132 @@
     let name: string
     let message: string
 
+    let isInView: boolean;
+    let isInView1: boolean;
+
 </script>
-<section id="contact-us">
+<section id="contact-us-form">
 <div class="contact-us__content">
-    {#if contactUsFormAnimation}
-        <div class="contact-us__header"
-        in:fade="{{duration: 1500}}" out:fade="{{duration: 1500}}">
-            <h2>Contact Us</h2>    
-            <p>Our business is helping you grow your business</p>
-        </div>
-        <div class="contact-us__container"
-        in:fade="{{duration: 1500}}" out:fade="{{duration: 1500}}">
-            <Grid>
-                <Row>
-                    <Column lg={10}>
-                        <div class="contact-form"
-                        in:fly="{{ x: 1000, duration: 1500 }}" out:fly="{{ x: 1000, duration: 1500 }}">
-                            <div class="form-container-box">
-                                <form action="" class="contact-form">
-                                <Column>
-                                    <div class="input-name-email">
-                                        <input type="text" 
-                                            class="name" 
-                                            placeholder="Name*"
-                                            bind:value={name}
-                                        />
-                                        <input type="text" 
-                                            class="email" 
-                                            placeholder="Email*"
-                                            bind:value={email}
-                                            class:field-danger={!$validity.valid}
-                                            class:field-success={$validity.valid}
-                                            use:validate={email}
-                                        />
-                                    </div>
-                                </Column>
+    <div class="contact-us__header"
+    use:inview={{ unobserveOnEnter: true, rootMargin: '-20%' }}
+    on:change={({ detail }) => {
+        isInView = detail.inView;
+    }}>
+        {#if isInView}
+            <header class="header-title"
+            in:fade="{{duration: 1500}}">
+                <h2>Contact Us</h2>    
+                <p>Our business is helping you grow your business</p>
+            </header>
+        {/if}
+    </div>
+    <div class="contact-us__container"
+    use:inview={{ unobserveOnEnter: true, rootMargin: '-20%' }}
+    on:change={({ detail }) => {
+    isInView1 = detail.inView;
+    }}>
+    {#if isInView1}
+        <Grid>
+            <Row>
+                <Column lg={10}>
+                    <div class="contact-form"
+                    in:fly="{{x: 100, opacity: 0, duration: 1500, delay:500}}">
+                        <div class="form-container-box">
+                            <form action="" class="contact-form">
+                            <Column>
+                                <div class="input-name-email">
+                                    <input type="text" 
+                                        class="name" 
+                                        placeholder="Name*"
+                                        bind:value={name}
+                                    />
+                                    <input type="text" 
+                                        class="email" 
+                                        placeholder="Email*"
+                                        bind:value={email}
+                                        class:field-danger={!$validity.valid}
+                                        class:field-success={$validity.valid}
+                                        use:validate={email}
+                                    />
+                                </div>
+                            </Column>
+                            <div class="valid-check-notice">
+                                <div class="unvalid">
+                                    {#if name === ""}
+                                        <span>Please enter a valid name!</span>
+                                    {/if}
+                                </div>
+                                <div class="unvalid">
+                                    {#if $validity.dirty && !$validity.valid}
+                                        <span>{$validity.message}</span>
+                                    {/if}
+                                </div>
+                            </div> 
+                            <Column>
+                            </Column>
+                            <Column><input type="text" class="subject" placeholder="Subject"></Column>
+                            <Column><textarea type="text" placeholder="Write Your Message*" bind:value={message}></textarea></Column>
+                            <Column>
                                 <div class="valid-check-notice">
                                     <div class="unvalid">
-                                        {#if name === ""}
-                                            <span>Please enter a valid name!</span>
+                                        {#if message === ""}
+                                            <span>Please, leave us a message!</span>
                                         {/if}
                                     </div>
-                                    <div class="unvalid">
-                                        {#if $validity.dirty && !$validity.valid}
-                                            <span>{$validity.message}</span>
-                                        {/if}
+                            </Column>
+                            <Column><button type="submit"
+                                        disable={!$validity.valid}
+                                    on:click|preventDefault={e => {SubmitEvent(e)}}>Send Message</button></Column>
+                            </form>
+                        </div>
+                    </div>
+                </Column>
+                <Column lg={6}>
+                    <div class="infomation-box"
+                    in:fly="{{x: -100, opacity: 0, duration: 1500, delay:500}}">
+                        <Grid>
+                            <Row>
+                                <Column lg={16}>
+                                    <div class="contact-info-box">
+                                        <div class="title">
+                                            <h6>Address:</h6>
+                                            <p>Dragon Eye Port, Lap Le, Thuy Nguyen, Hai Phong</p>
+                                        </div>
                                     </div>
-                                </div> 
-                                <Column>
                                 </Column>
-                                <Column><input type="text" class="subject" placeholder="Subject"></Column>
-                                <Column><textarea type="text" placeholder="Write Your Message*" bind:value={message}></textarea></Column>
-                                <Column>
-                                    <div class="valid-check-notice">
-                                        <div class="unvalid">
-                                            {#if message === ""}
-                                                <span>Please, leave us a message!</span>
-                                            {/if}
+                                <Column lg={16}>
+                                    <div class="contact-info-box">
+                                        <div class="title">
+                                            <h6>Phone:</h6>
+                                            <p>+84 999 888 666</p>
+                                            <p>+84 666 888 999</p>
                                         </div>
+                                    </div>
                                 </Column>
-                                <Column><button type="submit"
-                                            disable={!$validity.valid}
-                                        on:click|preventDefault={e => {SubmitEvent(e)}}>Send Message</button></Column>
-                                </form>
-                            </div>
-                        </div>
-                    </Column>
-                    <Column lg={6}>
-                        <div class="infomation-box"
-                        in:fly="{{ x: -1000, duration: 1500 }}" out:fly="{{ x: -1000, duration: 1500 }}">
-                            <Grid>
-                                <Row>
-                                    <Column lg={16}>
-                                        <div class="contact-info-box">
-                                            <div class="title">
-                                                <h6>Address:</h6>
-                                                <p>Dragon Eye Port, Lap Le, Thuy Nguyen, Hai Phong</p>
-                                            </div>
+                                <Column lg={16}>
+                                    <div class="contact-info-box">
+                                        <div class="title">
+                                            <h6>Email:</h6>
+                                            <p>abcdefghijk@phuhuyen.com</p>
+                                            <p>abcdefghijk@phuhuyen.com</p>
                                         </div>
-                                    </Column>
-                                    <Column lg={16}>
-                                        <div class="contact-info-box">
-                                            <div class="title">
-                                                <h6>Phone:</h6>
-                                                <p>+84 999 888 666</p>
-                                                <p>+84 666 888 999</p>
-                                            </div>
-                                        </div>
-                                    </Column>
-                                    <Column lg={16}>
-                                        <div class="contact-info-box">
-                                            <div class="title">
-                                                <h6>Email:</h6>
-                                                <p>abcdefghijk@phuhuyen.com</p>
-                                                <p>abcdefghijk@phuhuyen.com</p>
-                                            </div>
-                                        </div>
-                                    </Column>
-                                </Row>
-                            </Grid>
-                        </div>
-                    </Column>
-                </Row>
-            </Grid>
-        </div>
+                                    </div>
+                                </Column>
+                            </Row>
+                        </Grid>
+                    </div>
+                </Column>
+            </Row>
+        </Grid>
     {/if}
+    </div>
 </div>
 </section>
 
 <style lang="scss">
+@use 'src/variables';
 .contact-us__content {
+    width: variables.$wrapper-width-des;
     padding: 90px 0;
     overflow: hidden;
     width: 85%;
@@ -134,10 +152,12 @@
         font-weight: 600;
         margin-bottom: 20px;
         position: relative;
+        font-family: 'Poppins', sans-serif;
     }
     p {
         margin-bottom: 0;
         color: #6f6f6f;
+        font-family: 'Poppins', sans-serif;
     }
 }
 .valid-check-notice {
@@ -154,6 +174,7 @@
     span {
         color: #dc3545;
         z-index: 1;
+        font-family: 'Poppins', sans-serif;
     }
 }
 .input-name-email, .valid-check-notice {
@@ -191,12 +212,14 @@
             color: #ffffff;
             margin-bottom: 7px;
             text-transform: capitalize;
+            font-family: 'Poppins', sans-serif;
         }
         p {
             color: #fff;
             font-size: 14px;
             font-weight: 500;
             margin: 0;
+            font-family: 'Poppins', sans-serif;
         }
     }
 }
@@ -213,6 +236,7 @@ input {
     text-transform: capitalize;
     transition: all .4s;
     margin-bottom: 30px;
+    font-family: 'Poppins', sans-serif;
 }
 input[type=text]:focus, textarea[type=text]:focus {
   background-color:rgba(48, 186, 21, .3);
@@ -231,6 +255,7 @@ textarea {
     margin-bottom: 30px;
     transition: all .4s;
     min-height: 52px;
+    font-family: 'Poppins', sans-serif;
 }
 button {
     background: #000;
@@ -240,5 +265,6 @@ button {
     transition: 0.4s;
     border-radius: 50px;
     cursor: pointer;
+    font-family: 'Poppins', sans-serif;
 }
 </style>
